@@ -1,0 +1,2 @@
+"C:\Program Files (x86)\QualiSystems\CloudShell\Server\python\2.7.10\python.exe" -m pip install cloudshell-automation-api==2020.1.0.178672
+"C:\Program Files (x86)\QualiSystems\CloudShell\Server\python\2.7.10\python.exe" ping_resources.py
