@@ -1,8 +1,8 @@
 aws eks update-kubeconfig --name tip-wlan-main
-wsl helm plugin install https://github.com/aslafy-z/helm-git --version 0.10.0
-wsl helm repo add bitnami https://charts.bitnami.com/bitnami
-wsl helm repo update
-wsl sudo helm dependency update
+C:\Windows\System32\wsl helm plugin install https://github.com/aslafy-z/helm-git --version 0.10.0
+C:\Windows\System32\wsl helm repo add bitnami https://charts.bitnami.com/bitnami
+C:\Windows\System32\wsl helm repo update
+C:\Windows\System32\wsl sudo helm dependency update
 helm upgrade --install --create-namespace ^
   --namespace ucentral-{NAMESPACE} --wait --timeout 20m ^
   -f C:/Quali/helm/values/values.ucentral-qa.yaml ^
