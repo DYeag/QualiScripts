@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/local/bin/bash
 
 aws eks update-kubeconfig --name tip-wlan-main
 helm plugin install https://github.com/aslafy-z/helm-git --version 0.10.0
