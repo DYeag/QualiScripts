@@ -22,7 +22,7 @@ helm upgrade --install --create-namespace \
   --set ucentralgw.configProperties."rtty\.token"={RTTY_TOKEN} \
   --set ucentralsec.configProperties."authentication\.default\.username"={UCENTRALGW_AUTH_USERNAME} \
   --set ucentralsec.configProperties."authentication\.default\.password"={UCENTRALGW_AUTH_PASSWORD} \
-  --set rttys.config.token={RTTY_TOKEN)} \
+  --set rttys.config.token={RTTY_TOKEN} \
   --set ucentralfms.configProperties."s3\.secret"={UCENTRALFMS_S3_SECRET} \
   --set ucentralfms.configProperties."s3\.key"={UCENTRALFMS_S3_KEY} \
   --set ucentralgw.services.ucentralgw.annotations."external-dns\.alpha\.kubernetes\.io/hostname"=gw-ucentral-{NAMESPACE}.cicd.lab.wlan.tip.build \
