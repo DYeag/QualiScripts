@@ -27,7 +27,7 @@ helm upgrade --install --create-namespace \
   --set ucentralfms.configProperties."s3\.key"={UCENTRALFMS_S3_KEY} \
   --set ucentralgw.services.ucentralgw.annotations."external-dns\.alpha\.kubernetes\.io/hostname"=gw-ucentral-{NAMESPACE}.cicd.lab.wlan.tip.build \
   --set ucentralgw.configProperties."ucentral\.fileuploader\.host\.0\.name"=gw-ucentral-{NAMESPACE}.cicd.lab.wlan.tip.build \
-  --set ucentralgw.configProperties."rtty\.server"=rtty-ucentral-qualitest.cicd.lab.wlan.tip.build \
+  --set ucentralgw.configProperties."rtty\.server"=rtty-ucentral-{NAMESPACE}.cicd.lab.wlan.tip.build \
   --set ucentralgw.configProperties."ucentral\.system\.uri\.public"=https://gw-ucentral-{NAMESPACE}.cicd.lab.wlan.tip.build:16002 \
   --set ucentralgw.configProperties."ucentral\.system\.uri\.private"=https://gw-ucentral-{NAMESPACE}.cicd.lab.wlan.tip.build:17002 \
   --set ucentralgw.configProperties."ucentral\.system\.uri\.ui"=https://webui-ucentral-{NAMESPACE}.cicd.lab.wlan.tip.build \
