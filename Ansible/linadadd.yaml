@@ -1,0 +1,40 @@
+---
+# host should be a member of domain ansible.vagrant; module will ensure the hostname is mydomainclient
+# and will use the passed credentials to join domain if necessary.
+# Ansible connection should use local credentials if possible.
+# If a reboot is required, the second task will trigger one and wait until the host is available.
+- hosts: all
+  gather_facts: no
+  vars:
+  - hostname: "{{HOSTNAMED|default('nohostprovided')}}"
+  - dom_name: "{{NAME|default('test.local')}}"
+  - dom_pass: "{{PAST|default('Horsebatterystaple12!')}}"
+  - dom_user: "{{USER|default('cfox')}}"
+  tasks:
+  - name: Install pexpect
+    become: yes
+    become_user: root
+    pip:
+      name: pexpect
+
+  - name: install packages
+    become: yes
+    become_user: root
+    dnf:
+      state: present
+      name:
+        - samba-common-tools
+        - realmd
+        - oddjob
+        - oddjob-mkhomedir
+        - sssd
+        - adcli
+        - krb5-workstation
+
+  - name: Add targeted machine to domain
+    become_user: root
+    become: yes
+    expect:
+      command: /bin/bash -c "/usr/sbin/realm join {{ dom_name }} -U {{ dom_user }} --computer-ou=OU=Servers
+      responses:
+        Password for .*: "{{ dom_pass }}"
