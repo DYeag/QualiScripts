@@ -1,0 +1,47 @@
+---
+# host should be a member of domain ansible.vagrant; module will ensure the hostname is mydomainclient
+# and will use the passed credentials to join domain if necessary.
+# Ansible connection should use local credentials if possible.
+# If a reboot is required, the second task will trigger one and wait until the host is available.
+- hosts: all
+  gather_facts: no
+  vars:
+  - hostname: "{{HOSTNAMED|default('nohostprovided')}}"
+  - dom_name: "{{NAME|default('test.local')}}"
+  - dom_pass: "{{PAST|default('Horsebatterystaple12!')}}"
+  - dom_user: "{{USER|default('quali@test.com')}}"
+  tasks:
+  - name: setupfiles
+    ansible.windows.win_powershell:
+      script: |
+        mkdir c:\temp
+        Get-Date >> c:\temp\hold.txt
+        'Pre reboot' >> c:\temp\hold.txt
+        Get-WindowsFeature | Where-Object {$_.Name -eq 'Web-Server'} >> c:\temp\hold.txt
+        Get-WindowsFeature | Where-Object {$_.Name -eq 'RSAT-AD-PowerShell'} >> c:\temp\hold.txt
+
+  - name: Install RSAT tools
+    ansible.windows.win_feature:
+      name: RSAT-AD-PowerShell
+      state: present
+
+  - ansible.windows.win_domain_membership:
+      dns_domain_name: "{{dom_name}}"
+      hostname: "{{hostname}}"
+      domain_admin_user: "{{dom_user}}"
+      domain_admin_password: "{{dom_pass}}"
+      domain_ou_path: "OU=Servers,DC=test,DC=local"
+      state: domain
+    register: domain_state
+
+  - ansible.windows.win_reboot:
+    when: domain_state.reboot_required
+
+
+  - name: after run
+    ansible.windows.win_powershell:
+      script: |
+        Get-Date >> c:\temp\hold.txt
+        'post reboot same ansible' >> c:\temp\hold.txt
+        Get-WindowsFeature | Where-Object {$_.Name -eq 'Web-Server'} >> c:\temp\hold.txt
+        Get-WindowsFeature | Where-Object {$_.Name -eq 'RSAT-AD-PowerShell'} >> c:\temp\hold.txt
