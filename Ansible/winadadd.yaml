@@ -31,7 +31,6 @@
       hostname: "{{hostname}}"
       domain_admin_user: "{{dom_user}}"
       domain_admin_password: "{{dom_pass}}"
-      domain_ou_path: "{{dom_ou}}}"
       log_path: C:\Windows\Temp\ad_join_log.txt
       state: domain
     register: domain_state
