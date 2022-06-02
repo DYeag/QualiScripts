@@ -10,6 +10,7 @@
   - dom_name: "{{NAME|default('test.local')}}"
   - dom_pass: "{{PAST|default('Horsebatterystaple12!')}}"
   - dom_user: "{{USER|default('quali@test.com')}}"
+  - dom_ou: "{{OU|default('CN=Computers,DC=et,DC=lab')}}"
   tasks:
   - name: setupfiles
     ansible.windows.win_powershell:
@@ -30,7 +31,7 @@
       hostname: "{{hostname}}"
       domain_admin_user: "{{dom_user}}"
       domain_admin_password: "{{dom_pass}}"
-      domain_ou_path: "OU=Servers,DC=test,DC=local"
+      domain_ou_path: "{{dom_ou}}}"
       state: domain
     register: domain_state
 
